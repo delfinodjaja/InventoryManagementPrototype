@@ -1,0 +1,115 @@
+/* Modern Inventory Page CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  background: #e9ecef;
+  font-family: 'Poppins', sans-serif;
+  color: #343a40;
+  margin: 0;
+  padding: 0;
+}
+
+.inventory-container {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 30px 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.inventory-container:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.inventory-container h1 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 2.5rem;
+  color: #007bff;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* space between rows */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.inventory-table thead tr {
+  background-color: #007bff;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  border-radius: 8px;
+}
+
+.inventory-table thead th {
+  padding: 14px 20px;
+  border: none;
+  text-align: left;
+}
+
+.inventory-table tbody tr {
+  background-color: #f8f9fa;
+  transition: background-color 0.25s ease;
+  cursor: default;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.inventory-table tbody tr:hover {
+  background-color: #e2e6ea;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.inventory-table tbody td {
+  padding: 15px 20px;
+  border: none;
+  vertical-align: middle;
+  font-size: 1rem;
+  color: #495057;
+  border-radius: 8px;
+}
+
+/* Add subtle stripes for readability */
+.inventory-table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .inventory-container {
+    padding: 20px;
+  }
+
+  .inventory-table thead tr {
+    display: none; /* hide headers on small */
+  }
+
+  .inventory-table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .inventory-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.95rem;
+  }
+
+  .inventory-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6c757d;
+  }
+}

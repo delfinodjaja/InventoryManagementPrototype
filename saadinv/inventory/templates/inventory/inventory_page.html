@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vet Care - Inventory</title>
+    <link rel="stylesheet" href="{% static 'index.css' %}" />
+    <link rel="stylesheet" href="{% static 'inventory.css' %}" />
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container-nav">
+            <input type="checkbox" id="check" />
+
+            <div class="logo-container">
+                <h3 class="logo">Vet<span>Care</span></h3>
+            </div>
+
+            <div class="nav-btn">
+                <div class="nav-links">
+                    <ul>
+                        <li class="nav-link" style="--i: .6s">
+                            <a href="{% url 'index' %}">Home</a>
+                        </li>
+                        <li class="nav-link" style="--i: .85s">
+                            <a href="#">Products</a>
+                        </li>
+                        <li class="nav-link" style="--i: 1.1s">
+                            <a href="#">About</a>
+                        </li>
+                        <li class="nav-link" style="--i: 1.35s">
+                            <a href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="log-sign" style="--i: 1.8s">
+                    <a href="{% url 'dashboard' %}" class="btn solid">Dashboard</a>
+                    <a href="{% url 'logout' %}" class="btn transparent">Logout</a>
+                </div>
+            </div>
+
+            <div class="hamburger-menu-container">
+                <div class="hamburger-menu">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Inventory Display -->
+    <main class="inventory-container">
+        <h1>Inventory</h1>
+
+        {% if items %}
+        <table class="inventory-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price ($)</th>
+                    <th>Date Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td data-label="Item Name">{{ item.name }}</td>
+                    <td data-label="Quantity">{{ item.quantity }}</td>
+                    <td data-label="Price">{{ item.price }}</td>
+                    <td data-label="Date Added">{{ item.date|default:"No description." }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align:center; font-style: italic; color: #666;">No items in inventory.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

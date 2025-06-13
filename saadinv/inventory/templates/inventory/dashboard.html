@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetCare Pro - Dashboard</title>
+    <meta name="description" content="Professional Veterinary Clinic Management System">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --light-gray: #ecf0f1;
+            --medium-gray: #bdc3c7;
+            --dark-gray: #7f8c8d;
+            --white: #ffffff;
+            --off-white: #f8f9fa;
+            --border-color: #dee2e6;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-heavy: rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: var(--dark-gray);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin: 0;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Layout Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--shadow-medium);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .inventory-icon { background: var(--secondary-color); }
+        .appointment-icon { background: var(--accent-color); }
+        .billing-icon { background: var(--warning-color); }
+        .emr-icon { background: var(--success-color); }
+        .analytics-icon { background: var(--primary-color); }
+        .notifications-icon { background: var(--dark-gray); }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: var(--off-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.2s ease;
+        }
+
+        .stat-item:hover {
+            background: var(--light-gray);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin-top: 5px;
+        }
+
+        /* Appointments */
+        .appointment-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .appointment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .appointment-item:last-child {
+            border-bottom: none;
+        }
+
+        .appointment-time {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 14px;
+        }
+
+        .patient-name {
+            font-weight: 500;
+            color: var(--primary-color);
+            font-size: 14px;
+        }
+
+        .appointment-type {
+            font-size: 12px;
+            background: var(--off-white);
+            padding: 4px 8px;
+            border-radius: 12px;
+            color: var(--dark-gray);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Alerts */
+        .inventory-alert,
+        .billing-alert {
+            background: var(--danger-color);
+            color: var(--white);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .billing-alert {
+            background: var(--warning-color);
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .inventory-health,
+        .progress-label {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin: 5px 0;
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            margin: 8px 5px 8px 0;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--off-white);
+            color: var(--primary-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-gray);
+            color: var(--primary-color);
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Patient Cards */
+        .patient-card {
+            background: var(--off-white);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .patient-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .patient-card h4 {
+            color: var(--primary-color);
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .patient-info {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin: 2px 0 0 0;
+        }
+
+        .patient-status {
+            flex-shrink: 0;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .status-healthy {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        .status-follow-up,
+        .status-attention {
+            background: var(--warning-color);
+            color: var(--white);
+        }
+
+        .status-critical {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+
+        .last-visit {
+            font-size: 13px;
+            color: var(--dark-gray);
+            margin: 0;
+        }
+
+        /* Notifications */
+        .notifications-list {
+            space-y: 10px;
+        }
+
+        .notification-item {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .notification-info {
+            background: rgba(52, 152, 219, 0.1);
+            border-left-color: var(--accent-color);
+        }
+
+        .notification-warning {
+            background: rgba(243, 156, 18, 0.1);
+            border-left-color: var(--warning-color);
+        }
+
+        .notification-success {
+            background: rgba(39, 174, 96, 0.1);
+            border-left-color: var(--success-color);
+        }
+
+        .notification-item p {
+            font-size: 13px;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* Empty States */
+        .no-appointments,
+        .no-patients,
+        .no-notifications {
+            text-align: center;
+            padding: 20px;
+            color: var(--dark-gray);
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .appointment-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .patient-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <a href="{% url 'index' %}"><div class="logo-icon">VC</div></a>
+                <div>
+                    <h1> VetCare Pro</h1>
+                    <p class="subtitle">Automated Clinic Management</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div>
+                    <p class="user-name">Dr. {% firstof user.get_short_name user.get_username %}</p>
+                    <p class="user-role">Veterinarian</p>
+                </div>
+                <div class="user-avatar">SJ</div>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            <!-- Inventory Management -->
+            <div class="card feature-highlight">
+                <div class="card-header">
+                    <div class="card-icon inventory-icon">INV</div>
+                    <h3>Inventory Management</h3>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-items">{{ total }}</span>
+                        <span class="stat-label">Items  Stock</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="low-stock">{{ low_stock }}</span>
+                        <span class="stat-label">Low Stock Alerts</span>
+                    </div>
+                </div>
+                <div class="inventory-alert" id="inventory-alert" style="display: none;">
+                    Critical: Low stock on essential medications
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="inventory-health-bar" style="width: 75%;"></div>
+                </div>
+                <p class="inventory-health">Inventory Health: <span id="inventory-health">75</span>%</p>
+                <a href="{% url 'inventory' %}"><button class="btn" onclick="viewInventory()" > View Full Inventory</button></a>
+            </div>
+
+            <!-- Appointment Scheduling -->
+            <div class="card feature-highlight">
+                <div class="card-header">
+                    <div class="card-icon appointment-icon">APT</div>
+                    <h3>Today's Appointments</h3>
+                </div>
+                <div class="appointment-list" id="appointment-list">
+                    <!-- Appointments will be populated by JavaScript -->
+                </div>
+                <div class="quick-actions">
+                    <button class="btn" onclick="scheduleNew()">Schedule New</button>
+                    <button class="btn btn-secondary" onclick="calendarView()">Calendar View</button>
+                </div>
+            </div>
+
+            <!-- Billing Automation -->
+            <div class="card feature-highlight">
+                <div class="card-header">
+                    <div class="card-icon billing-icon">BIL</div>
+                    <h3>Billing & Payments</h3>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="daily-revenue">$2,340</span>
+                        <span class="stat-label">Today's Revenue</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="pending-invoices">8</span>
+                        <span class="stat-label">Pending Invoices</span>
+                    </div>
+                </div>
+                <div class="billing-alert" id="billing-alert" style="display: none;">
+                    Payment overdue: Client #2047
+                </div>
+                <button class="btn" onclick="generateInvoice()">Generate Invoice</button>
+                <button class="btn btn-secondary" onclick="paymentReports()">Payment Reports</button>
+            </div>
+        </div>
+
+        <!-- EMR Section -->
+        <div class="features-grid">
+            <div class="card feature-highlight">
+                <div class="card-header">
+                    <div class="card-icon emr-icon">EMR</div>
+                    <h3>Electronic Medical Records</h3>
+                </div>
+                <div id="patient-records">
+                    <!-- Patient records will be populated by JavaScript -->
+                </div>
+                <button class="btn" onclick="accessAllRecords()">Access All Records</button>
+            </div>
+
+            <div class="card feature-highlight">
+                <div class="card-header">
+                    <div class="card-icon analytics-icon">ANA</div>
+                    <h3>Analytics Dashboard</h3>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="monthly-patients">156</span>
+                        <span class="stat-label">Patients This Month</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="appointment-rate">94%</span>
+                        <span class="stat-label">Appointment Rate</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="monthly-progress-bar" style="width: 87%;"></div>
+                </div>
+                <p class="progress-label">Monthly Goal Progress: <span id="monthly-progress">87</span>%</p>
+                <button class="btn" onclick="detailedReports()">Detailed Reports</button>
+            </div>
+
+            <div class="card feature-highlight">
+                <div class="card-header">
+                    <div class="card-icon notifications-icon">NOT</div>
+                    <h3>Smart Notifications</h3>
+                </div>
+                <div class="notifications-list" id="notifications-list">
+                    <!-- Notifications will be populated by JavaScript -->
+                </div>
+                <button class="btn" onclick="viewAllAlerts()">View All Alerts</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const dashboardData = {
+            appointments: {{ patient|safe }},
+            patients: [
+                {
+                    name: "Max",
+                    breed: "Golden Retriever",
+                    owner: "John Smith",
+                    id: "P001",
+                    status: "healthy",
+                    lastVisit: "Mar 15, 2024",
+                    notes: "Annual checkup completed"
+                },
+                {
+                    name: "Bella",
+                    breed: "Persian Cat",
+                    owner: "Sarah Johnson",
+                    id: "P002",
+                    status: "follow-up",
+                    lastVisit: "Mar 12, 2024",
+                    notes: "Follow-up on medication response"
+                }
+            ],
+            notifications: [
+                { type: "info", message: "New appointment request from Maria Garcia" },
+                { type: "warning", message: "Vaccine expiring soon for 3 patients" },
+                { type: "success", message: "Monthly revenue target achieved" }
+            ]
+        };
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            populateAppointments();
+            populatePatientRecords();
+            populateNotifications();
+            setupInteractiveFeatures();
+            
+            // Show alerts conditionally
+            if (Math.random() > 0.5) {
+                document.getElementById('inventory-alert').style.display = 'block';
+            }
+            if (Math.random() > 0.7) {
+                document.getElementById('billing-alert').style.display = 'block';
+            }
+        });
+
+        function populateAppointments() {
+            const appointmentList = document.getElementById('appointment-list');
+            
+            if (dashboardData.appointments.length === 0) {
+                appointmentList.innerHTML = '<div class="no-appointments"><p>No appointments scheduled for today</p></div>';
+                return;
+            }
+
+            appointmentList.innerHTML = dashboardData.appointments.map(appointment => `
+                <div class="appointment-item">
+                    <div>
+                        <div class="appointment-time">${appointment.date}</div>
+                        <div class="patient-name">${appointment.name}</div>
+                    </div>
+                    <div class="appointment-type">${appointment.category}</div>
+                </div>
+            `).join('');
+        }
+
+        function populatePatientRecords() {
+            const patientRecords = document.getElementById('patient-records');
+            
+            if (dashboardData.patients.length === 0) {
+                patientRecords.innerHTML = '<div class="no-patients"><p>No recent patient records</p></div>';
+                return;
+            }
+
+            patientRecords.innerHTML = dashboardData.patients.map(patient => `
+                <div class="patient-card">
+                    <div class="patient-header">
+                        <div>
+                            <h4>${patient.name} - ${patient.breed}</h4>
+                            <p class="patient-info">Owner: ${patient.owner} | ID: #${patient.id}</p>
+                        </div>
+                        <div class="patient-status">
+                            <span class="status-badge status-${patient.status}">${patient.status.charAt(0).toUpperCase() + patient.status.slice(1)}</span>
+                        </div>
+                    </div>
+                    <p class="last-visit">Last Visit: ${patient.lastVisit} - ${patient.notes}</p>
+                </div>
+            `).join('');
+        }
+
+        function populateNotifications() {
+            const notificationsList = document.getElementById('notifications-list');
+            
+            if (dashboardData.notifications.length === 0) {
+                notificationsList.innerHTML = '<div class="no-notifications"><p>No recent notifications</p></div>';
+                return;
+            }
+
+            notificationsList.innerHTML = dashboardData.notifications.map(notification => `
+                <div class="notification-item notification-${notification.type}">
+                    <p>${notification.message}</p>
+                </div>
+            `).join('');
+        }
+
+        function setupInteractiveFeatures() {
+            // Add click effects to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('button')) {
+                        this.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                    }
+                });
+            });
+        }
+
+        // Button click handlers
+        function viewInventory() {
+            showNotification('Opening inventory management...', 'info');
+        }
+
+        function scheduleNew() {
+            showNotification('Opening appointment scheduler...', 'info');
+        }
+
+        function calendarView() {
+            showNotification('Opening calendar view...', 'info');
+        }
+
+        function generateInvoice() {
+            showNotification('Opening invoice generator...', 'info');
+        }
+
+        function paymentReports() {
+            showNotification('Opening payment reports...', 'info');
+        }
+
+        function accessAllRecords() {
+            showNotification('Opening medical records...', 'info');
+        }
+
+        function detailedReports() {
+            showNotification('Opening analytics reports...', 'info');
+        }
+
+        function viewAllAlerts() {
+            showNotification('Opening notifications center...', 'info');
+        }
+
+        // Utility function for showing notifications
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `dashboard-notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--white);
+                color: var(--primary-color);
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px var(--shadow-medium);
+                border: 1px solid var(--border-color);
+                z-index: 1000;
+                max-width: 300px;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 18px; cursor: pointer; margin-left: 10px;">&times;</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+
+        // Add CSS for notification animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
+                to { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

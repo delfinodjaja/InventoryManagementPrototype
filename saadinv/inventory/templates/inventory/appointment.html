@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Appointment - Vet Care</title>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <link rel="stylesheet" href="{% static 'appointment.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container-nav">
+            <div class="logo-container">
+                <h3 class="logo">Vet<span>Care</span></h3>
+            </div>
+            <div class="nav-btn">
+                <div class="nav-links">
+                    <ul>
+                        <li class="nav-link"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="nav-link"><a href="{% url 'inventory' %}">Inventory</a></li>
+                        <li class="nav-link"><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="log-sign">
+                    <a href="{% url 'logout' %}" class="btn transparent">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="form-container">
+        <h2>Create New Appointment</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn solid">Submit</button>
+        </form>
+    </main>
+</body>
+</html>
